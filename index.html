@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TodoList</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="inputValue">
+        <button @click="handleSubmit">submit</button>
+        <ul>
+            <todo-item  :content="item" 
+                        v-for="(item,index) in list" 
+                        :key="index"
+            >
+            </todo-item>
+        </ul>
+    </div>
+    <script>
+        //全局组件
+        Vue.component("TodoItem", {
+            props: ['content'],
+            template: '<li>{{content}}</li>'
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                inputValue: "",
+                list: []
+            },
+            methods: {
+                handleSubmit() {
+                    this.list.push(this.inputValue)
+                    this.inputValue = ""
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

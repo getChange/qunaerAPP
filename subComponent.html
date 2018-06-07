@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TodoList</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        input {
+            width: 300px;
+            height: 30px;
+            margin: 30px;
+            font-size: 18px;
+        }
+
+        button {
+            width: 100px;
+            height: 30px;
+            border-radius: 20px;
+            margin-left: 20px;
+            font-size: 16px;
+            text-align: center;
+            border: 0px;
+            background-color: rgb(53, 65, 233);
+            color: #fff;
+        }
+
+        ul,
+        li {
+            margin-top: 10px;
+            list-style: none;
+            font-size: 25px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="inputValue" />
+        <button @click="submitTodo">submit</button>
+        <ul>
+            <todo-item  :content="item" 
+                        :index="index"
+                        @delete="handleDelete"
+                        v-for="(item,index) in todoList">
+            </todo-item>
+        </ul>
+    </div>
+    <script>
+        Vue.component('TodoItem',{
+            props: ['content','index'],
+            template: '<li @click="handleEle">{{content}}</li>',
+            methods: {
+                handleEle () {
+                    this.$emit("delete",this.index)
+                }
+            }
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                todoList: [],
+                inputValue: ''
+            },
+            methods: {
+                submitTodo () {
+                    this.todoList.push(this.inputValue);
+                    this.inputValue = "";
+                },
+                handleDelete (index) {
+                    this.todoList.splice(index,1)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>样式绑定-数组</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        .activated {
+            color: red
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div @click="changeStyle"
+             :class="{activated: isActivated}">
+             Hello World
+        </div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                isActivated: false
+            },
+            methods: {
+                changeStyle () {
+                    this.isActivated = !this.isActivated;
+                }
+            }
+        })
+    </script>
+</body>
+</html>

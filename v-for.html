@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>列表渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 列表渲染的两种方式 -->
+    <!-- 1.使用pop push shift splice unshift sort reverse方法向已有数据内添加数据 -->
+    <!-- 2.直接对已有数据进行重新操作,改变数据的引用地址 -->
+    <!-- 3.set方法 -->
+    <!-- 当有若干个循环需要使用list渲染时 可以使用template占位符来进行循环 这样不会影响模块的渲染 -->
+    <div id="app">
+        <template v-for="item of list" :key="item.id">
+            <div>{{item.text}}</div>
+        </template>
+    </div>
+    <div id="root">
+        <div v-for="(item,key) of userInfo">{{item}}--{{key}}</div>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list: [{
+                    id: "001",
+                    text: "mongo"    
+                },{
+                    id:"002",
+                    text: "bubble"
+                },{
+                    id:"003",
+                    text: "die"
+                }]
+            },
+            methods: {
+                
+            }
+        })
+        var vm2 = new Vue({
+            el: "#root",
+            data: {
+                userInfo: {
+                    name: "hanweimin",
+                    age: 28,
+                    like: "play",
+                    hate: "work"
+                }
+            },
+            methods: {
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

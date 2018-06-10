@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件的参数校验与非props特性</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <!-- 非props特性 -->
+    <!-- 1.子组件使用了一个没有在props内定义的父组件传值 -->
+    <!-- 2.当使用了非props声明的传值 会将这个值作为DOM节点的一个属性显示在页面上 -->
+    <div id="app">
+        <child content="this is content"></child>
+    </div>
+    <script>
+        Vue.component('child',{
+            props: {
+                //1.第一种书写形式content: [String,Number] //可以指定数据类型,用数组形式表明想要传递的多种类型 
+                //2.第二种书写形式
+                content: {
+                    type: String,//制定类型
+                    required:true, //content这个内容必传 不传会报错
+                    default: 'default value', //content内容的默认值
+                    validator: function(value) {//content的字符串的长度必须大于5
+                        return (value.length > 5)
+                    }
+                }
+            },
+            template: '<div>{{content}}</div>'
+        })
+        var vm = new Vue({
+            el: "#app",
+        })
+    </script>
+</body>
+
+</html>

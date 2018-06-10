@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>给组件绑定原生事件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 自定义的组件绑定的是自定义事件 -->
+        <!-- 在事件后面加一个`.native`表示的是监听的是一个原生事件 -->
+        <child @click.native="handleClick"></child>
+    </div>
+    <script>
+        Vue.component("child",{
+            //子组件上绑定的是原生事件
+            template: '<div>Child</div>'
+        })
+        var vm = new Vue({
+            el: "#app",
+            methods: {
+                handleClick: function() {
+                    alert("child")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

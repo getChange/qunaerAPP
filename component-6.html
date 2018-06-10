@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>非父子组件之间传值(Bus/总线/发布订阅模式/观察者模式)</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+            <child content="mango"></child>
+            <child content="bubble"></child>
+    </div>
+    <script>
+        Vue.prototype.bus = new Vue()
+
+        Vue.component('child', {
+            props:['content'],
+            data:function () {
+                return {
+                    selfContent: this.content
+                }
+            },
+            template: '<div @click="handleClick">{{selfContent}}</div>',
+            methods: {
+                handleClick: function() {
+                    this.bus.$emit("change",this.selfContent);
+                }
+            },
+            //使用生命周期的钩子函数去对事件进行监听
+            mounted: function() {
+                var _this = this;
+                this.bus.$on("change", function(message) {
+                    _this.selfContent = message
+                })
+            }
+        })
+        var vm = new Vue({
+            el: "#app",
+            methods: {
+                
+            }
+        })
+    </script>
+</body>
+
+</html>

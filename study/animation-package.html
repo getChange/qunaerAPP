@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue中同时使用过渡和动画</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <fade :show="show">
+            <div>
+                hello world
+            </div>
+        </fade>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        Vue.component('fade', {
+            props: ['show'],
+            template: `<transition 
+                            @before-enter="handleEnterClick"
+                            @enter="handleEnter"
+                            @after-enter="handleAfterClick">
+                           <slot v-if="show"></slot>
+                       </transition>`,
+            methods: {
+                handleEnterClick: function(el) {
+                    el.style.opacity = 0;
+                },
+                handleEnter: function(el, done) {
+                    setTimeout(() => {
+                        el.style.opacity = 1;
+                    },2000)
+                    done()
+                },
+                handleAfterClick: function (el) {
+                    console.log("动画结束")
+                }
+            }
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: true
+            },
+            methods: {
+                handleClick: function () {
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

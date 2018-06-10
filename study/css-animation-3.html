@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vue中同时使用过渡和动画</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <link rel="stylesheet" href="./animate.css">
+    <style>
+        .part-enter,
+        .part-leave-to {
+            opacity: 0;
+        }
+        .part-enter-active,
+        .part-leave-active {
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- appear和appear-active-class 可以是第一次渲染页面也会出现动画 -->
+        <!-- type 以哪一种动画时长为标准 -->
+        <!-- :duration 自定义动画播放时长 -->
+        <transition name="part" 
+                    :duration="{enter: 3000, leave: 3000}"
+                    appear
+                    enter-active-class="animated swing fade-enter-active" 
+                    leave-active-class="animated shake fade-leave-active"
+                    appear-active-class="animated swing"
+        >
+            <div v-if="show">
+                hello world
+            </div>
+        </transition>
+
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: true
+            },
+            methods: {
+                handleClick: function () {
+                    this.show = !this.show
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

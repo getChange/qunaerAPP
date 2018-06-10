@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue中的Js动画和Velocity.js的结合</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="./velocity.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <transition 
+                    name="part"
+                    @before-enter="handleEnterClick"
+                    @enter="handleEnter"
+                    @after-enter="handleAfterClick"
+                    >
+            <div v-if="show">
+                hello world
+            </div>
+        </transition>
+
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                show: true
+            },
+            methods: {
+                handleClick: function () {
+                    this.show = !this.show
+                },
+                handleEnterClick: function(el) {
+                    el.style.opacity = 0;
+                },
+                handleEnter: function(el, done) {
+                    Velocity(el, {
+                        opacity: 1
+                    }, {
+                        duration: 1000,
+                        complete: done
+                    })
+                },
+                handleAfterClick: function (el) {
+                    console.log("动画结束")
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

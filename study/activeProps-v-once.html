@@ -7,13 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>动态组件和v-once指令</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        .componentMove-enter,
+        .componentMove-leave-to {
+            opacity: 0;
+        }
+        .componentMove-enter-active,
+        .componentMove-leave-active {
+            transition: opacity 1s;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
         <!-- v-once 会把只需要一次展示的内容存进内存中 方便下次进行渲染 而不会消耗性能 -->
         <!-- 动态组件 -->
-        <component :is="type"></component>
+        <transition name="componentMove">
+            <component :is="type"></component>
+        </transition>
+        
         <!-- 常规书写 -->
         <!-- <child-one v-if="type === 'child-one'"></child-one>
         <child-two v-if="type === 'child-two'"></child-two> -->

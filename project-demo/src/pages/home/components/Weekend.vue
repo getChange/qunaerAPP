@@ -1,13 +1,14 @@
 <template>
     <div>
-      <div class="recommend-title">热门推荐</div>
+      <div class="recommend-title">周末去哪儿</div>
       <ul>
         <li class="item" v-for="item of list" :key="item.id">
-            <img class="item-img" :src="item.imgUrl" alt="">
+            <div class="item-img-wrapper">
+              <img class="item-img" :src="item.imgUrl" alt="">
+            </div>
             <div class="item-info">
               <p class="item-title">{{item.title}}</p>
               <p class="item-desc">{{item.desc}}</p>
-              <button class="item-btn">查看详情</button>
             </div>
         </li>
       </ul>
@@ -16,7 +17,7 @@
 
 <script>
 export default {
-  name: 'HomeRecommend',
+  name: 'HomeWeekend',
   props: {
     list: Array
   }
@@ -28,17 +29,16 @@ export default {
     line-height: .8rem;
     background: #eee;
     text-indent: .2rem;
-    margin-top: .2rem;
     padding-left: .2rem;
   }
   .item {
-    display: flex;
-    height: 1.9rem;
-    overflow: hidden;
-    .item-img {
-      width: 1.7rem;
-      height: 1.7rem;
-      padding: .1rem;
+    .item-img-wrapper {
+      overflow: hidden;
+      height: 0;
+      padding-bottom: 37.09%;
+      .item-img {
+        width: 100%;
+      }
     }
     .item-info {
       padding: .1rem;
@@ -52,14 +52,6 @@ export default {
         line-height: .4rem;
         font-size: .28rem;
         color: #ccc;
-      }
-      .item-btn {
-        background: #ff9300;
-        padding: 0 .2rem;
-        border-radius: .06rem;
-        margin-top: .16rem;
-        color: #fff;
-        line-height: .44rem;
       }
     }
   }

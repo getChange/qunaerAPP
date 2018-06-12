@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "fastclick": "^1.0.6",
+    "node-sass": "^4.9.0",
     "sass": "^1.5.1",
     "vue": "^2.5.2",
     "vue-awesome-swiper": "^2.6.7",

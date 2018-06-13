@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none
+        }
+
+        #app {
+            width: 504px;
+            height: 300px;
+            margin: 100px auto;
+            border: 1px solid #000;
+        }
+
+        ul {
+            overflow: hidden;
+        }
+
+        li {
+            width: 100px;
+            height: 50px;
+            float: left;
+            text-align: center;
+            line-height: 50px;
+            border-bottom: 1px solid #000;
+            border-right: 1px solid #000;
+        }
+
+        li:nth-child(5) {
+            border-right: none;
+        }
+
+        .cur {
+            height: 51px;
+            background: blue;
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <ul>
+        <li v-for="(num,index) in nums" :class="{cur:iscur==index}" @click="iscur = index,tab('text'+(index+1))">
+            {{num.t}}
+        </li>
+    </ul>
+    <div class="box">
+        <component :is='currentView' keep-alive></component>
+    </div>
+</div>
+
+<script>
+    const text1 = Vue.component('text1', {template: `<div><h1>Text111111111111</h1></div>`});
+    const text2 = Vue.component('text2', {template: `<div><h1>Text222222222222</h1></div>`});
+    const text3 = Vue.component('text3', {template: `<div><h1>Text333333333333</h1></div>`});
+    const text4 = Vue.component('text4', {template: `<div><h1>Text444444444444</h1></div>`});
+    const text5 = Vue.component('text5', {template: `<div><h1>Text555555555555</h1></div>`});
+
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            currentView: text1,
+            nums: [{t: "text1"}, {t: "text2"}, {t: "text3"}, {t: "text4"}, {t: "text5"}],
+            iscur: 0
+        },
+
+        methods: {
+            tab(tabText){
+                this.currentView = tabText;
+            }
+        }
+    })
+</script>
+</body>
+</html>

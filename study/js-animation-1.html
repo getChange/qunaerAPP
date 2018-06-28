@@ -14,9 +14,9 @@
     <div id="app">
         <transition 
                     name="part"
-                    @before-enter="handleEnterClick"
-                    @enter="handleEnter"
-                    @after-enter="handleAfterClick"
+                    @before-leave="handleEnterClick"
+                    @leave="handleEnter"
+                    @after-leave="handleAfterClick"
                     >
             <div v-if="show">
                 hello world
@@ -36,11 +36,11 @@
                     this.show = !this.show
                 },
                 handleEnterClick: function(el) {
-                    el.style.opacity = 0;
+                    el.style.opacity = 1;
                 },
                 handleEnter: function(el, done) {
                     Velocity(el, {
-                        opacity: 1
+                        opacity: 0
                     }, {
                         duration: 1000,
                         complete: done

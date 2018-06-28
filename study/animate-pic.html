@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script src="http://tool.oschina.net/js/jquery/jquery-1.7.2.js"></script>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<style>
+  #app {
+    position: relative;
+    width: 100%;
+    height: 30px;
+  }
+
+  .animate-p {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+  }
+
+  button {
+    margin-top: 200px;
+  }
+</style>
+
+<body>
+  <div id="app">
+    <transition v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
+      <span class="animate-p" v-show="show">
+        <img id="imgCur" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCJLXn2RP0Ta8WPOjssZUzOVQN8KswMXApGCMry4VAi8fscvglQ" alt="">
+      </span>
+    </transition>
+    <br>
+    <button @click="handleClick">toggle</button>
+  </div>
+  <script>
+    new Vue({　　
+      el: '#app',
+      data: {
+        show: true,
+        curHeight: 0,
+        curWidth: 0
+      },
+      methods: {
+        handleClick () {
+          this.show = !this.show
+        },
+        //进入之前
+        beforeEnter: function (el) {
+          $(el).css({
+            top: - Number(this.height) + 'px'
+          })
+        },
+        //进入中
+        enter: function (el, done) {
+          $(el).stop().animate({
+            top: 0
+          }, {
+            duration: 3000,
+            complete: done
+          }, 5000)
+        },
+        //结束
+        leave: function (el, done) {
+          $(el).stop().animate({
+            top: - Number(this.height) + 'px'
+          }, {
+            duration: 3000,
+            complete: done
+          }, 5000)
+          console.log(-this.height+'px')
+          const _this = this
+          setTimeout(function (el) {
+            console.log(_this.show)
+            _this.show = !_this.show
+          }, 5000)
+        }
+      },
+      mounted() {
+        this.$nextTick(() => {
+            let cur = document.getElementById('imgCur')
+            console.log(cur)
+            let curHeight = cur.height,
+                curWidth = cur.width
+            this.height = curHeight
+            this.width = curWidth
+            console.log(curHeight);
+        })
+      },
+    });
+  </script>
+</body>
+
+</html>

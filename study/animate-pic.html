@@ -44,7 +44,8 @@
         curWidth: 0
       },
       methods: {
-        handleClick () {
+        handleClick (el) {
+          console.log(el.offsetWidth)
           this.show = !this.show
         },
         //进入之前

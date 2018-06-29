@@ -8,49 +8,82 @@
     <title>Vue中的Js动画和Velocity.js的结合</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="./velocity.js"></script>
+    <style>
+        #app {
+            position: relative;
+            margin: 0 auto;
+            margin-top: .84rem;
+            overflow: hidden;
+        }
+
+        .ticket-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: red;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+        button {
+            display: block;
+            margin-top: 300px;
+            color: #000
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <transition 
-                    name="part"
-                    @before-leave="handleEnterClick"
-                    @leave="handleEnter"
-                    @after-leave="handleAfterClick"
-                    >
-            <div v-if="show">
-                hello world
+        <transition name="ticket" v-on:before-enter="beforeEnter" v-on:enter="enter" v-on:leave="leave" v-bind:css="false">
+            <div class="ticket-img" v-show="show">
+                <img id="imgCur" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbCJLXn2RP0Ta8WPOjssZUzOVQN8KswMXApGCMry4VAi8fscvglQ"
+                    alt="">
             </div>
         </transition>
-
-        <button @click="handleClick">切换</button>
+        <button @click="handleClick">切换显示方块</button>
     </div>
     <script>
         var vm = new Vue({
-            el: "#app",
+            el: '#app',
             data: {
                 show: true
             },
             methods: {
-                handleClick: function () {
+                handleClick() {
                     this.show = !this.show
                 },
-                handleEnterClick: function(el) {
-                    el.style.opacity = 1;
+                // 进入之前
+                beforeEnter(el) {
+                    console.log('before')
+                    el.style.top = '140px'
                 },
-                handleEnter: function(el, done) {
+                // 进入中
+                enter(el, done) {
+                    console.log('enter')
                     Velocity(el, {
-                        opacity: 0
+                        top: 0
                     }, {
-                        duration: 1000,
+                        duration: 3000
+                    }, {
                         complete: done
                     })
                 },
-                handleAfterClick: function (el) {
-                    console.log("动画结束")
+                // 1
+                leave(el, done) {
+                    console.log('leave')
+                    Velocity(el, {
+                        top: '140px'
+                    }, {
+                        duration: 3000
+                    }, {
+                        complete: done
+                    })
                 }
             }
-        })
+        });
     </script>
 </body>
 
